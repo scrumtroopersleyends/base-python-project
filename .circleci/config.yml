@@ -12,8 +12,7 @@ jobs:
           key: base-python-project-{{ checksum "Pipfile.lock" }}
       - run:
           command: |  # use pipenv to install dependencies
-            sudo pip install pipenv
-            pipenv install
+            sudo pip install -r requirements.txt
       - save_cache:
           key: base-python-project-{{ checksum "Pipfile.lock" }}
           paths:
@@ -22,7 +21,7 @@ jobs:
             - "/usr/local/lib/python3.7/site-packages"
       - run:
           command: |
-            pipenv run python tests
+            pytest tests
       - store_test_results: # Upload test results for display in Test Summary: https://circleci.com/docs/2.0/collect-test-data/
           path: test-results
       - store_artifacts: # Upload test summary for display in Artifacts: https://circleci.com/docs/2.0/artifacts/
